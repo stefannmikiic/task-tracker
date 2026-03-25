@@ -111,7 +111,7 @@ useEffect(() => {
         Task Manager
       </h1>
 
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-300 hover:scale-[1.02] mb-6">
         <TaskForm onAdd={handleAdd} />
       </div>
 
