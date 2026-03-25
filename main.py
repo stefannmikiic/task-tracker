@@ -1,12 +1,10 @@
 from datetime import datetime
-
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine, SessionLocal
 import database_models
 from sqlalchemy.orm import Session
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,7 +23,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 📌 Request body model
 class TaskCreate(BaseModel):
     title: str
     description: str = ""
@@ -33,14 +30,10 @@ class TaskCreate(BaseModel):
 class TaskUpdate(BaseModel):
     title: str
 
-
-# 🔹 GET all tasks
 @app.get("/tasks")
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(database_models.Task).all()
 
-
-# 🔹 POST create task
 @app.post("/tasks")
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     new_task = database_models.Task(
@@ -53,7 +46,6 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(new_task)
 
     return new_task
-
 
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, updated: TaskUpdate, db: Session = Depends(get_db)):
@@ -70,8 +62,6 @@ def update_task(task_id: int, updated: TaskUpdate, db: Session = Depends(get_db)
 
     return task
 
-
-# 🔹 PATCH mark done
 @app.patch("/tasks/{id}/done")
 def done(id: int, db: Session = Depends(get_db)):
     task = db.query(database_models.Task).filter(database_models.Task.id == id).first()
@@ -84,7 +74,6 @@ def done(id: int, db: Session = Depends(get_db)):
 
     db.commit()
     return task
-
 
 @app.patch("/tasks/{task_id}/progress")
 def mark_progress(task_id: int, db: Session = Depends(get_db)):
@@ -103,7 +92,6 @@ def mark_progress(task_id: int, db: Session = Depends(get_db)):
     db.refresh(task)
 
     return task
-
 
 @app.delete("/tasks/{id}")
 def delete_task(id: int, db: Session = Depends(get_db)):
