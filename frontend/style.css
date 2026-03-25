@@ -1,0 +1,13 @@
+body {
+    font-family: Arial;
+    max-width: 600px;
+    margin: auto;
+}
+
+li {
+    margin: 10px 0;
+}
+
+button {
+    margin-left: 5px;
+}
