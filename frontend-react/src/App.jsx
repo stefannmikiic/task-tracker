@@ -4,7 +4,8 @@ import {
   createTask,
   deleteTask,
   markDone,
-  markProgress
+  markProgress,
+  updateTask
 
 } from "./api/tasks";
 
@@ -97,6 +98,19 @@ useEffect(() => {
       setTasks(res.data);
     }
   };
+  const handleUpdate = async (id, data) => {
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, ...data } : t))
+    );
+
+    try {
+      await updateTask(id, data);
+    } catch {
+      const res = await getTasks();
+      setTasks(res.data);
+    }
+  };
+
 
   return (
   <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-500">
@@ -120,6 +134,7 @@ useEffect(() => {
         onDelete={handleDelete}
         onDone={handleDone}
         onProgress={handleProgress}
+        onUpdate={handleUpdate}
       />
 
     </div>

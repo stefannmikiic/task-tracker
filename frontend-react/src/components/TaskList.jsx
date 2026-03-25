@@ -1,5 +1,5 @@
 import TaskCard from "./TaskCard";
-export default function TaskList({ tasks, onDelete, onDone, onProgress }) {
+export default function TaskList({ tasks, onDelete, onDone, onProgress, onUpdate }) {
   return (
     <div className="grid gap-3">
       {tasks.map((t) => (
@@ -9,6 +9,7 @@ export default function TaskList({ tasks, onDelete, onDone, onProgress }) {
           onDelete={onDelete}
           onDone={onDone}
           onProgress={onProgress}
+          onUpdate={onUpdate}
         />
       ))}
     </div>
